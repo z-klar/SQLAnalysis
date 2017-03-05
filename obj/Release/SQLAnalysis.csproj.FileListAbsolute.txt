@@ -1,0 +1,8 @@
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\bin\Release\SQLAnalysis.exe.config
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\bin\Release\SQLAnalysis.exe
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\bin\Release\SQLAnalysis.pdb
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Release\SQLAnalysis.Form1.resources
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Release\SQLAnalysis.Properties.Resources.resources
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Release\SQLAnalysis.csproj.GenerateResource.Cache
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Release\SQLAnalysis.exe
+C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Release\SQLAnalysis.pdb
