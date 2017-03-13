@@ -7,8 +7,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace SQLAnalysis
+namespace TempLogger01
 {
     class SqlProcessing
     {
@@ -99,8 +100,6 @@ namespace SQLAnalysis
             // connection string into the constructor
             con = new SqlConnection(connectionString);
             con.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
-            //con.FireInfoMessageEventOnUserErrors = true;
-            //con.InfoMessage += OnInfoMessage;
 
             connectionString = "server=" + server +
             ";database=master" + ";uid=" + user + ";pwd=" + pwd;
@@ -156,14 +155,7 @@ namespace SQLAnalysis
             }
             catch (Exception ex)
             {
-                if (Verbose == 0)
-                {
-                    //MessageBox.Show("Exception during SQL Open Connection occured,\nsee the logger window!");
-                }
-                else
-                {
-                    //MessageBox.Show(ex.Message);
-                }
+                ErrorMessages.Add(Command);
                 ProcessException(ex);
                 return (newTable);
             }
@@ -176,14 +168,7 @@ namespace SQLAnalysis
             }
             catch (Exception ex)
             {
-                if (Verbose == 0)
-                {
-                    //MessageBox.Show("Exception during SQL Query occured,\nsee the logger window!");
-                }
-                else
-                {
-                    //MessageBox.Show(ex.Message);
-                }
+                ErrorMessages.Add(Command);
                 ProcessException(ex);
                 con.Close();
                 return (newTable);
@@ -232,7 +217,6 @@ namespace SQLAnalysis
 
             catch (SqlException ex)
             {
-                //MessageBox.Show("Exception during SQL NONQuery occured,\nsee the logger window!");
                 ErrorMessages.Add(sCmd);
                 ProcessException(ex);
                 iErr = -19;
@@ -266,7 +250,6 @@ namespace SQLAnalysis
 
             catch (SqlException ex)
             {
-                //MessageBox.Show("Exception during SQL NONQuery occured,\nsee the logger window!");
                 ErrorMessages.Add(sCmd);
                 ProcessException(ex);
                 con.Close();
@@ -275,47 +258,6 @@ namespace SQLAnalysis
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sSource"></param>
-        /// <returns></returns>
-        public String RestoreDB(String sSource)
-        {
-            string sCmd;
-
-            ErrorMessages.Clear();
-            InfoMessages.Clear();
-
-            sCmd = string.Format("restore database STOCK_INVEST from disk='{0}'", sSource);
-            try
-            {
-                con.Open();
-                SqlCommand cmd = new SqlCommand("alter database STOCK_INVEST set offline with rollback immediate", con);
-                cmd.ExecuteNonQuery();
-                cmd = new SqlCommand(sCmd, con);
-                cmd.ExecuteNonQuery();
-                cmd = new SqlCommand("alter database STOCK_INVEST set online with rollback immediate", con);
-                cmd.ExecuteNonQuery();
-                con.Close();
-
-                connectionString = "server=" + server +
-                ";database=" + db + ";uid=" + user + ";pwd=" + pwd;
-                con = new SqlConnection(connectionString);
-                con.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
-
-                return (ErrorMessage);
-            }
-
-            catch (SqlException ex)
-            {
-                //MessageBox.Show("Exception during SQL RestoreDB occured,\nsee the logger window!");
-                ProcessException(ex);
-                con.Close();
-                return ("");
-            }
-
-        }
 
         /// <summary>
         /// 
@@ -343,54 +285,42 @@ namespace SQLAnalysis
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sTable"></param>
-        /// <param name="sIdName"></param>
-        /// <returns></returns>
-        public long GetNewId(String sTable, String sIdName)
+        public String RestoreDB(String sSource)
         {
-            DataTable dtPom;
-            String sCmd;
-            object obj;
-            long iRes = 0;
+            string sCmd;
 
-            sCmd = string.Format("SELECT MAX({0}) from {1}", sIdName, sTable);
-            dtPom = ReadData(sCmd, 0);
-            obj = dtPom.Rows[0].ItemArray[0];
-            if (!DBNull.Value.Equals(obj))
-            {
-                iRes = Convert.ToInt64(obj);
-            }
-            return (++iRes);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Stock"></param>
-        /// <param name="Market"></param>
-        /// <param name="sDatum"></param>
-        /// <returns></returns>
-        public int CheckRateRec(int Stock, int Market, DateTime Datum)
-        {
-            int iRet = 0;
-            DataTable dtPom;
-            String sCmd;
-
+            ErrorMessages.Clear();
             InfoMessages.Clear();
-            sCmd = string.Format("SELECT ID from RATES where ((STOCK_ID={0}) and (MARKET_ID={1}) and (DATUM='{2:s}'))",
-                                                                      Stock, Market, Datum);
-            dtPom = ReadData(sCmd, 0);
-            if (dtPom.Rows.Count != 0)
-            {
-                iRet = 1;
-            }
-            InfoMessages.Add(string.Format("CheckRateRec: [{0}],  RES={1} ", sCmd, iRet));
-            return (iRet);
-        }
 
+            sCmd = string.Format("restore database EMON from disk='{0}' with REPLACE", sSource);
+            try
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("alter database EMON set offline with rollback immediate", con);
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCommand(sCmd, con);
+                cmd.ExecuteNonQuery();
+                cmd = new SqlCommand("alter database EMON set online with rollback immediate", con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                connectionString = "server=" + server +
+                ";database=" + db + ";uid=" + user + ";pwd=" + pwd;
+                con = new SqlConnection(connectionString);
+                con.InfoMessage += new SqlInfoMessageEventHandler(OnInfoMessage);
+
+                return (ErrorMessage);
+            }
+
+            catch (SqlException ex)
+            {
+                MessageBox.Show("Exception during SQL RestoreDB occured,\nsee the logger window!");
+                ProcessException(ex);
+                con.Close();
+                return ("");
+            }
+
+        }
 
         /// <summary>
         /// Log exception related messages: the Message field does not contain newlines
@@ -415,10 +345,19 @@ namespace SQLAnalysis
                 ErrorMessages.Add(String.Format("   Stack:   [{0}]", sent));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ArrayList GetErrors()
         {
             return (ErrorMessages);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ArrayList GetInfos()
         {
             return (InfoMessages);
