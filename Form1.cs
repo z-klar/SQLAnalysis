@@ -10,6 +10,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*-----------------------------------------------------------------------------
+ * Added new comment
+ * ---------------------------------------------------------------------------*/
+
 namespace SQLAnalysis
 {
     public partial class Form1 : Form

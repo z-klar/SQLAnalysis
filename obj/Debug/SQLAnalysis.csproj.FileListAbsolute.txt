@@ -7,3 +7,12 @@ C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.Properties.Resourc
 C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.csproj.GenerateResource.Cache
 C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.exe
 C:\DOTNET\Tests\SQLAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.pdb
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\bin\Debug\SQLAnalysis.exe.config
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.exe
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.pdb
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\bin\Debug\SQLAnalysis.exe
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\bin\Debug\SQLAnalysis.pdb
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.csprojResolveAssemblyReference.cache
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.Form1.resources
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.Properties.Resources.resources
+D:\DOTNET\GIT\EMON\SqlAnalysis\SQLAnalysis\obj\Debug\SQLAnalysis.csproj.GenerateResource.Cache
