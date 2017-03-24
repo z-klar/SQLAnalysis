@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TempLogger01
+namespace SQLAnalysis
 {
     class SqlProcessing
     {
